@@ -1,5 +1,3 @@
-use std::{collections::HashSet, hash::Hash};
-
 use super::*;
 
 pub fn task1() {
@@ -38,7 +36,7 @@ enum WhichMore {
     Equal
 }
 
-fn which_is_more(i: usize, set: &Vec<Vec<u8>>) -> WhichMore {
+fn which_is_more(i: usize, set: &Vec<&Vec<u8>>) -> WhichMore {
     let mut count = 0;
     for v in set {
         if v[i] == 1 {
@@ -63,7 +61,7 @@ pub fn task2() {
 
     let str_iter = reader.lines().map(|x| x.unwrap());
 
-    let mut oxy_set: Vec<Vec<u8>> = str_iter.map(|str|-> Vec<u8> {
+    let data: Vec<Vec<u8>> = str_iter.map(|str|-> Vec<u8> {
         str.chars().map(|bit|-> u8 {
             if bit == '1' {
                 1
@@ -71,6 +69,8 @@ pub fn task2() {
                 0}
         }).collect()
     }).collect();
+
+    let mut oxy_set: Vec<_> = data.iter().collect();
 
     let mut co2_set = oxy_set.clone();
 
@@ -89,8 +89,8 @@ pub fn task2() {
         //println!("oxy: {:?}, co2: {:?}", oxy_set, co2_set);
     }
 
-    let oxy_vec = &oxy_set[0];
-    let co2_vec = &co2_set[0];
+    let oxy_vec = oxy_set[0];
+    let co2_vec = co2_set[0];
 
     let mut oxy_num: u32 = 0;
     let mut co2_num: u32 = 0;
